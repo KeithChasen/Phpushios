@@ -138,12 +138,7 @@ class Sender
     }
 
     /**
-     * $request_headers = [
-        'apns-expiration': '0',
-        'apns-priority': '10',
-        'apns-topic': BUNDLE_ID,
-        'authorization': 'bearer {0}' . format(token.decode('ascii'))
-    ]
+     * sets request headers
      */
     public function setRequestHeaders()
     {
