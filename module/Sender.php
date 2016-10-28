@@ -11,11 +11,6 @@ class Sender
      */
     const ALGORITHM = 'ES256';
 
-//'tls://gateway.push.apple.com:2195', // Production environment
-//'tls://gateway.sandbox.push.apple.com:2195' // Sandbox environment
-
-//'api.push.apple.com:443',
-//'api.development.push.apple.com:443'
     /**
      * 0 = > prod
      * 1 = > dev
