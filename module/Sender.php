@@ -77,7 +77,7 @@ class Sender
         $bundleId
     ) {
         if (!array_key_exists($environment, self::ENVIRONMENTS)) {
-            throw new \Exception('Invalid evironment ' . $environment);
+            throw new \Exception('Invalid environment ' . $environment);
         }
         $this->_environment = $environment;
 
@@ -105,16 +105,9 @@ class Sender
     }
 
     /**
-     * ID of the generated key
-     * @param $apns_key_id
-     *
-     * developer team id
+     * @param $apnsKeyId
      * @param $teamId
-     *
-     * time()
      * @param $issueAt
-     *
-     * $secret = file_get_contents($apns_auth_key);
      * @param $secret
      */
     public function setToken($apnsKeyId, $teamId, $issueAt, $secret)
@@ -161,16 +154,17 @@ class Sender
 
     /**
      * @param $message
-     * @param $userToken
      */
-    public function sendPush($message, $userToken)
+    public function sendPush($message)
     {
-        $this->setPayload($message);
-        $this->setRequestHeaders();
+        foreach ($this->receiversTokens as $receiversToken) {
+            $this->setPayload($message);
+            $this->setRequestHeaders();
 
-        $this->urlToSend = self::ENVIRONMENTS[$this->_environment] . '/3/device/' . $userToken;
+            $this->urlToSend = self::ENVIRONMENTS[$this->_environment] . '/3/device/' . $receiversToken;
 
-        $this->createHttp2Connection($this->urlToSend);
+            $this->createHttp2Connection($this->urlToSend);
+        }
     }
 
     public function createHttp2Connection($url)
