@@ -137,8 +137,10 @@ class Sender
     private function auth($curl)
     {
         $this->requestHeaders = [
+            'apns-expiration: 0',
+            'apns-priority: 10',
             'apns-topic: ' . $this->bundleId,
-            'Authorization: bearer ' . $this->token
+            'authorization: bearer ' . $this->token
         ];
 
         curl_setopt($curl, CURLOPT_HTTPHEADER, $this->requestHeaders);
@@ -151,7 +153,7 @@ class Sender
      */
     private function setPayload($message)
     {
-        $this->payload_data = '{"aps":{"alert":"' . $message . '","sound":"default"}}';
+        $this->payload_data = json_encode('{"aps":{"alert":"' . $message . '","sound":"default"}}', JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -181,7 +183,6 @@ class Sender
             curl_setopt_array($ch,
                 [
                     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0,
-                    CURLOPT_HTTPHEADER, $this->requestHeaders,
                     CURLOPT_URL => $url,
                     CURLOPT_PORT => 443,
                     CURLOPT_HEADER => true,

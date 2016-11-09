@@ -2,6 +2,12 @@ IOS PHP Pusher
 =
 Simple ios-php push library with token based authentication and HTTP/2
 
+Requirements
+=
++ PHP >= 7.0.12
++ curl >= 7.46.0
++ openssl >= 1.0.2
+
 Example
 -
 ```php
