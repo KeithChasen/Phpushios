@@ -106,7 +106,7 @@ class Sender
      * @param $teamId
      * @return string
      */
-    public function setToken($apnsAuthKey, $apnsKeyId, $secret, $teamId)
+    private function setToken($apnsAuthKey, $apnsKeyId, $secret, $teamId)
     {
         $privateECKey = JWKFactory::createFromKeyFile($apnsAuthKey, $secret, [
             'kid' => $apnsKeyId,
@@ -134,7 +134,7 @@ class Sender
     /**
      * @param $curl
      */
-    public function auth($curl)
+    private function auth($curl)
     {
         $this->requestHeaders = [
             'apns-topic: ' . $this->bundleId,
@@ -149,7 +149,7 @@ class Sender
      *
      * @param $message
      */
-    public function setPayload($message)
+    private function setPayload($message)
     {
         $this->payload_data = '{"aps":{"alert":"' . $message . '","sound":"default"}}';
     }
@@ -170,7 +170,7 @@ class Sender
         }
     }
 
-    public function createHttp2Connection($url)
+    private function createHttp2Connection($url)
     {
         if (curl_version()['features'] & CURL_VERSION_HTTP2 !== 0) {
 
@@ -194,9 +194,6 @@ class Sender
 
             $response = curl_exec($ch);
             $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-            var_dump($response);
-            var_dump($httpcode);
 
              if ($response !== false && preg_match('~HTTP/2.0~', $response)) {
 
