@@ -38,5 +38,4 @@ $pushSender = new \Module\Sender(
 
 $pushSender->addReceiver($userToken);
 $pushSender->sendPush('Push with p8');
-?>
 ```
