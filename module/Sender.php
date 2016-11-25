@@ -2,13 +2,10 @@
 
 namespace Module;
 
-
-
 class Sender
 {
     /**
-     * 0 = > prod
-     * 1 = > dev
+     * prod and dev environments
      */
     const ENVIRONMENTS = [
         'https://api.push.apple.com',
@@ -33,8 +30,6 @@ class Sender
     protected $receiversTokens = [];
 
     /**
-     * 0 = > prod
-     * 1 = > dev
      * @var $_environment
      */
     protected $_environment;

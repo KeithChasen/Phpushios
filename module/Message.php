@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: keithchasen
- * Date: 25.11.16
- * Time: 16:52
- */
 
 namespace Module;
-
 
 class Message
 {
