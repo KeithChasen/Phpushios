@@ -13,18 +13,17 @@ class Sender
     ];
 
     /**
-     * @var $token
-     * auth token
+     * @var $authToken
      */
     private $authToken;
 
     /**
-     * @var $request_headers
+     * @var $requestHeaders
      */
     protected $requestHeaders;
 
     /**
-     * @var array
+     * @var array $receiversTokens
      * array of user tokens
      */
     protected $receiversTokens = [];
@@ -73,6 +72,10 @@ class Sender
         $this->receiversTokens[] = $token;
     }
 
+    /**
+     * finds device token and removes it from receiversTokens array
+     * @param $token
+     */
     public function removeReceiversToken($token)
     {
         if (in_array($token, $this->receiversTokens)) {
@@ -148,8 +151,6 @@ class Sender
 
             $response = curl_exec($ch);
             $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-            var_dump($response);
 
              if ($response !== false && preg_match('~HTTP/2.0~', $response)) {
 

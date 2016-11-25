@@ -25,7 +25,8 @@ class Message
     protected $sound;
 
     /**
-     * setsPayload
+     * sets and returns payload
+     * @return string
      */
     public function setPayload()
     {

@@ -19,19 +19,20 @@ class Auth
 
     /**
      * Auth constructor.
-     * @param $apnsAuthKey
+     * @param $authKey
      * @throws \Exception
      */
-    public function __construct(
-        $apnsAuthKey
-    ) {
-        if (!is_readable($apnsAuthKey)) {
+    public function __construct($authKey)
+    {
+        if (!is_readable($authKey)) {
             throw new \Exception('Can not read auth key');
         }
-        $this->authKey = $apnsAuthKey;
+        $this->authKey = $authKey;
     }
 
     /**
+     * Generating auth token from certificate
+     *
      * @param $apnsKeyId
      * @param $secret
      * @param $teamId
