@@ -5,7 +5,6 @@
         }
     },
     "require": {
-        "firebase/php-jwt": "^4.0",
         "spomky-labs/jose": "^6.1.1"
     }
 }

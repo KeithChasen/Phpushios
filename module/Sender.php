@@ -2,17 +2,10 @@
 
 namespace Module;
 
-use Jose\Factory\JWKFactory;
-use Jose\Factory\JWSFactory;
 
 
 class Sender
 {
-    /**
-     * required encoding algorithm
-     */
-    const ALGORITHM = 'ES256';
-
     /**
      * 0 = > prod
      * 1 = > dev
@@ -26,13 +19,7 @@ class Sender
      * @var $token
      * auth token
      */
-    private $token;
-
-    /**
-     * @var array
-     * array of user tokens
-     */
-    protected $receiversTokens = [];
+    private $authToken;
 
     /**
      * @var $request_headers
@@ -40,9 +27,10 @@ class Sender
     protected $requestHeaders;
 
     /**
-     * @var $payload_data
+     * @var array
+     * array of user tokens
      */
-    protected $payload_data;
+    protected $receiversTokens = [];
 
     /**
      * 0 = > prod
@@ -59,31 +47,22 @@ class Sender
     /**
      * Sender constructor.
      * @param $environment
-     * @param $apnsAuthKey
-     * @param $apnsKeyId
-     * @param $teamId
+     * @param $authToken
      * @param $bundleId
-     * @param $secret
      * @throws \Exception
      */
-    public function __construct(
-        $environment,
-        $apnsAuthKey,
-        $apnsKeyId,
-        $teamId,
-        $bundleId,
-        $secret
-    ) {
+    public function __construct($environment, $authToken, $bundleId)
+    {
         if (!array_key_exists($environment, self::ENVIRONMENTS)) {
             throw new \Exception('Invalid environment ' . $environment);
         }
         $this->_environment = $environment;
 
-        if (!is_readable($apnsAuthKey)) {
-            throw new \Exception('Can not read auth key');
+        if (empty($authToken)) {
+            throw new \Exception('Empty auth token');
         }
-        $this->bundleId = $bundleId;
-        $this->token = $this->setToken($apnsAuthKey, $apnsKeyId, $secret, $teamId);
+           $this->authToken = $authToken;
+           $this->bundleId = $bundleId;
     }
 
     /**
@@ -99,86 +78,65 @@ class Sender
         $this->receiversTokens[] = $token;
     }
 
-    /**
-     * @param $apnsAuthKey
-     * @param $apnsKeyId
-     * @param $secret
-     * @param $teamId
-     * @return string
-     */
-    private function setToken($apnsAuthKey, $apnsKeyId, $secret, $teamId)
+    public function removeReceiversToken($token)
     {
-        $privateECKey = JWKFactory::createFromKeyFile($apnsAuthKey, $secret, [
-            'kid' => $apnsKeyId,
-            'alg' => self::ALGORITHM,
-            'use' => 'sig'
-        ]);
-
-        $claims = [
-            'iss' => $teamId,
-            'iat' => time()
-        ];
-
-        $headers = [
-            'alg' => self::ALGORITHM,
-            'kid' => $apnsKeyId
-        ];
-
-        return JWSFactory::createJWSToCompactJSON(
-            $claims,
-            $privateECKey,
-            $headers
-        );
+        if (in_array($token, $this->receiversTokens)) {
+            unset(
+                $this->receiversTokens[
+                array_search(
+                    $token,
+                    $this->receiversTokens
+                )
+                ]
+            );
+        }
     }
 
     /**
      * @param $curl
      */
-    private function auth($curl)
+    private function setHeaders($curl)
     {
         $this->requestHeaders = [
             'apns-expiration: 0',
             'apns-priority: 10',
             'apns-topic: ' . $this->bundleId,
-            'authorization: bearer ' . $this->token
+            'authorization: bearer ' . $this->authToken
         ];
 
         curl_setopt($curl, CURLOPT_HTTPHEADER, $this->requestHeaders);
     }
 
     /**
-     * sets payload
-     *
-     * @param $message
+     * @param $payload
      */
-    private function setPayload($message)
+    public function sendPush($payload)
     {
-        $this->payload_data = json_encode('{"aps":{"alert":"' . $message . '","sound":"default"}}', JSON_UNESCAPED_UNICODE);
-    }
 
-    /**
-     * @param $message
-     */
-    public function sendPush($message)
-    {
         foreach ($this->receiversTokens as $receiversToken) {
-            $this->setPayload($message);
 
-            $path = '/3/device/' . $receiversToken;
+            $tokenPartUrl = '/3/device/' . $receiversToken;
 
-            $urlToSend = self::ENVIRONMENTS[$this->_environment] . $path;
+            $baseUrl = self::ENVIRONMENTS[$this->_environment];
 
-            $this->createHttp2Connection($urlToSend);
+            $urlToSend = $baseUrl . $tokenPartUrl;
+
+            $this->createHttp2Connection($urlToSend, $payload);
         }
     }
 
-    private function createHttp2Connection($url)
+    /**
+     * @param $url
+     * @param $payload
+     * @throws \Exception
+     */
+    private function createHttp2Connection($url, $payload)
     {
         if (curl_version()['features'] & CURL_VERSION_HTTP2 !== 0) {
 
           $ch = curl_init();
 
-            $this->auth($ch);
+            $this->setHeaders($ch);
 
             curl_setopt_array($ch,
                 [
@@ -187,7 +145,7 @@ class Sender
                     CURLOPT_PORT => 443,
                     CURLOPT_HEADER => true,
                     CURLOPT_POST => true,
-                    CURLOPT_POSTFIELDS => $this->payload_data,
+                    CURLOPT_POSTFIELDS => $payload,
                     CURLOPT_RETURNTRANSFER => true,
                     CURLOPT_TIMEOUT => 30
                 ]
@@ -195,6 +153,8 @@ class Sender
 
             $response = curl_exec($ch);
             $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+            var_dump($response);
 
              if ($response !== false && preg_match('~HTTP/2.0~', $response)) {
 
@@ -208,5 +168,4 @@ class Sender
             throw new \Exception("No HTTP/2 support on client");
         }
     }
-
 }
