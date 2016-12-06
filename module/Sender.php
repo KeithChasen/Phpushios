@@ -45,7 +45,7 @@ class Sender
      * @param $environment
      * @param $authToken
      * @param $bundleId
-     * @throws \Exception
+     * @throws PhpushiousException
      */
     public function __construct($environment, $authToken, $bundleId)
     {
@@ -66,9 +66,8 @@ class Sender
     }
 
     /**
-     * adds receiver
      * @param $token
-     * @throws \Exception
+     * @throws PhpushiousException
      */
     public function addReceiver($token)
     {
@@ -133,7 +132,7 @@ class Sender
     /**
      * @param $url
      * @param $payload
-     * @throws \Exception
+     * @throws PhpushiousException
      */
     private function createHttp2Connection($url, $payload)
     {

@@ -89,7 +89,7 @@ class Message
 
     /**
      * @param $number
-     * @throws \Exception
+     * @throws PhpushiousException
      */
     public function setBadgeNumber($number)
     {
@@ -103,7 +103,7 @@ class Message
 
     /**
      * @param bool $contentAvailable
-     * @throws \Exception
+     * @throws PhpushiousException
      */
     public function setContentAvailable($contentAvailable = false)
     {
@@ -125,7 +125,7 @@ class Message
 
     /**
      * @param bool $mutableContent
-     * @throws \Exception
+     * @throws PhpushiousException
      */
     public function setMutableContent($mutableContent = false)
     {
@@ -153,6 +153,11 @@ class Message
         $this->sound = $sound;
     }
 
+    /**
+     * @param $name
+     * @param $value
+     * @throws PhpushiousException
+     */
     public function setCustomProperty($name, $value)
     {
         if (trim($name) == self::APS_NAMESPACE) {

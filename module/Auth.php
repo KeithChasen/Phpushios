@@ -21,7 +21,7 @@ class Auth
     /**
      * Auth constructor.
      * @param $authKey
-     * @throws \Exception
+     * @throws PhpushiousException
      */
     public function __construct($authKey)
     {
