@@ -1,9 +1,10 @@
 <?php
 
-namespace Module;
+namespace Phpushios;
 
 use Jose\Factory\JWKFactory;
 use Jose\Factory\JWSFactory;
+use PhpushiousException;
 
 class Auth
 {
@@ -25,7 +26,9 @@ class Auth
     public function __construct($authKey)
     {
         if (!is_readable($authKey)) {
-            throw new \Exception('Can not read auth key');
+            throw new PhpushiousException(
+                'Can not read auth key'
+            );
         }
         $this->authKey = $authKey;
     }
@@ -34,35 +37,35 @@ class Auth
      * Generating auth token from certificate
      *
      * @param $apnsKeyId
-     * @param $secret
+     * @param $authKeySecret
      * @param $teamId
      * @return string
      */
-    public function setAuthToken($apnsKeyId, $secret, $teamId)
+    public function setAuthToken($apnsKeyId, $authKeySecret, $teamId)
     {
-        $key = JWKFactory::createFromKeyFile(
+        $secret = JWKFactory::createFromKeyFile(
             $this->authKey,
-            $secret,
+            $authKeySecret,
             [
-                'kid' => $apnsKeyId,
-                'alg' => self::ALGORITHM
+                'alg' => self::ALGORITHM,
+                'kid' => $apnsKeyId
             ]
         );
 
-        $claims = [
+        $claim = [
             'iss' => $teamId,
             'iat' => time()
         ];
 
-        $headers = [
+        $header = [
             'alg' => self::ALGORITHM,
             'kid' => $apnsKeyId
         ];
 
         return JWSFactory::createJWSToCompactJSON(
-            $claims,
-            $key,
-            $headers
+            $claim,
+            $secret,
+            $header
         );
     }
 

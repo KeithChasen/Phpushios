@@ -1,10 +1,17 @@
 {
+    "name":"keithchasen/phpushious",
+    "description":"Php iOS push notifications provider",
+    "keywords": ["APNS", "push", "p8"],
+    "license":"MIT",
+    "require": {
+        "php": ">= 7.0.12",
+        "lib-curl": ">= 7.46.0",
+        "lib-openssl": ">= 1.0.2",
+        "spomky-labs/jose": "^6.1.1"
+    },
     "autoload": {
         "psr-4": {
-            "Module\\": "module/"
+            "Phpushios\\": "module/"
         }
-    },
-    "require": {
-        "spomky-labs/jose": "^6.1.1"
     }
 }

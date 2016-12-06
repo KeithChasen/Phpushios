@@ -1,6 +1,8 @@
 <?php
 
-namespace Module;
+namespace Phpushios;
+
+use PhpushiousException;
 
 class Sender
 {
@@ -48,12 +50,16 @@ class Sender
     public function __construct($environment, $authToken, $bundleId)
     {
         if (!array_key_exists($environment, self::ENVIRONMENTS)) {
-            throw new \Exception('Invalid environment ' . $environment);
+            throw new PhpushiousException(
+                'Invalid environment ' . $environment
+            );
         }
         $this->_environment = $environment;
 
         if (empty($authToken)) {
-            throw new \Exception('Empty auth token');
+            throw new PhpushiousException(
+                'Empty auth token'
+            );
         }
            $this->authToken = $authToken;
            $this->bundleId = $bundleId;
@@ -67,7 +73,9 @@ class Sender
     public function addReceiver($token)
     {
         if (!preg_match('~[a-f0-9]{64}~', $token)) {
-            throw new \Exception("Invalid token " . $token);
+            throw new PhpushiousException(
+                "Invalid token " . $token
+            );
         }
         $this->receiversTokens[] = $token;
     }
@@ -81,10 +89,10 @@ class Sender
         if (in_array($token, $this->receiversTokens)) {
             unset(
                 $this->receiversTokens[
-                array_search(
-                    $token,
-                    $this->receiversTokens
-                )
+                    array_search(
+                        $token,
+                        $this->receiversTokens
+                    )
                 ]
             );
         }
@@ -110,7 +118,6 @@ class Sender
      */
     public function sendPush($payload)
     {
-
         foreach ($this->receiversTokens as $receiversToken) {
 
             $tokenPartUrl = '/3/device/' . $receiversToken;
@@ -155,13 +162,19 @@ class Sender
              if ($response !== false && preg_match('~HTTP/2.0~', $response)) {
 
             } elseif ($response !== false) {
-                 throw new \Exception("No HTTP/2 support on server");
+                 throw new PhpushiousException(
+                     "No HTTP/2 support on server"
+                 );
             } else {
-                throw new \Exception(curl_error($ch));
+                throw new PhpushiousException(
+                    curl_error($ch)
+                );
             }
             curl_close($ch);
         } else {
-            throw new \Exception("No HTTP/2 support on client");
+            throw new PhpushiousException(
+                "No HTTP/2 support on client"
+            );
         }
     }
 }
