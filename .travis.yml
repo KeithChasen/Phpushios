@@ -2,8 +2,26 @@ language: php
 php:
   - 7
 before_script:
+  - sudo apt-get install make
+  - wget https://www.openssl.org/source/openssl-1.0.2g.tar.gz
+  - tar -xzvf openssl-1.0.2g.tar.gz (
+  - cd openssl-1.0.2g
+  - sudo ./config
+  - sudo make install
+  - sudo ln -sf /usr/local/ssl/bin/openssl /usr/bin/openssl
   - openssl version
+
+  - cd ~
+  - sudo apt-get build-dep curl
+  - wget http://curl.haxx.se/download/curl-7.46.0.tar.bz2
+  - tar -xvjf curl-7.46.0.tar.bz2
+  - cd curl-7.46.0
+  - ./configure --with-nghttp2=/usr/local --with-ssl
+  - make
+  - sudo make install
+  - sudo ldconfig
   - curl -V
+
   - composer install
 script:
   - vendor/bin/phpcs module/
