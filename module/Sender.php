@@ -8,7 +8,6 @@
  * @category Sending
  * @package  Phpushios
  * @author   Keith Chasen <keithchasen89@gmail.com>
- * @file     Sender
  * @license  https://opensource.org/licenses/MIT MIT
  * @version  GIT: $Id$
  * @link     https://github.com/KeithChasen/Phpushios
@@ -24,7 +23,6 @@ use PhpushiosException;
  * @category Sending
  * @package  Phpushios
  * @author   Keith Chasen <keithchasen89@gmail.com>
- * @file     Sender
  * @license  https://opensource.org/licenses/MIT MIT
  * @version  Release: 1.0.0
  * @link     https://github.com/KeithChasen/Phpushios
@@ -201,12 +199,12 @@ class Sender
     {
         if (curl_version()['features'] & CURL_VERSION_HTTP2 !== 0) {
 
-            $ch = curl_init();
+            $curlResource = curl_init();
 
-            $this->setHeaders($ch);
+            $this->setHeaders($curlResource);
 
             curl_setopt_array(
-                $ch,
+                $curlResource,
                 [
                     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0,
                     CURLOPT_URL => $url,
@@ -219,8 +217,8 @@ class Sender
                 ]
             );
 
-            $response = curl_exec($ch);
-            $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            $response = curl_exec($curlResource);
+            $httpcode = curl_getinfo($curlResource, CURLINFO_HTTP_CODE);
 
             if (false !== $response
                 && preg_match('~HTTP/2.0~', $response)
@@ -232,10 +230,10 @@ class Sender
                  );
             } else {
                 throw new PhpushiosException(
-                    curl_error($ch)
+                    curl_error($curlResource)
                 );
             }
-            curl_close($ch);
+            curl_close($curlResource);
         } else {
             throw new PhpushiosException(
                 "No HTTP/2 support on client"

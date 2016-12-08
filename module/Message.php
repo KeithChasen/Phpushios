@@ -8,7 +8,6 @@
  * @category Message
  * @package  Phpushios
  * @author   Keith Chasen <keithchasen89@gmail.com>
- * @file     Message
  * @license  https://opensource.org/licenses/MIT MIT
  * @version  GIT: $Id$
  * @link     https://github.com/KeithChasen/Phpushios
@@ -24,7 +23,6 @@ use PhpushiosException;
  * @category Message
  * @package  Phpushios
  * @author   Keith Chasen <keithchasen89@gmail.com>
- * @file     Message
  * @license  https://opensource.org/licenses/MIT MIT
  * @version  Release: 1.0.0
  * @link     https://github.com/KeithChasen/Phpushios

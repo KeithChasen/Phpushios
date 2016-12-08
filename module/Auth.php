@@ -8,7 +8,6 @@
  * @category Authentication
  * @package  Phpushios
  * @author   Keith Chasen <keithchasen89@gmail.com>
- * @file     Auth
  * @license  https://opensource.org/licenses/MIT MIT
  * @version  GIT: $Id$
  * @link     https://github.com/KeithChasen/Phpushios
@@ -26,7 +25,6 @@ use PhpushiosException;
  * @category Authentication
  * @package  Phpushios
  * @author   Keith Chasen <keithchasen89@gmail.com>
- * @file     Auth
  * @license  https://opensource.org/licenses/MIT MIT
  * @version  Release: 1.0.0
  * @link     https://github.com/KeithChasen/Phpushios
