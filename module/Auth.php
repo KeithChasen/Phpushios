@@ -3,7 +3,7 @@ namespace Phpushios;
 
 use Jose\Factory\JWKFactory;
 use Jose\Factory\JWSFactory;
-use PhpushiousException;
+use PhpushiosException;
 
 class Auth
 {
@@ -21,12 +21,12 @@ class Auth
      * Auth constructor.
      *
      * @param string $authKey
-     * @throws PhpushiousException
+     * @throws PhpushiosException
      */
     public function __construct($authKey)
     {
         if (!is_readable($authKey)) {
-            throw new PhpushiousException(
+            throw new PhpushiosException(
                 'Can not read auth key'
             );
         }

@@ -1,6 +1,9 @@
 <?php
 
-class PhpushiousException extends Exception
+/**
+ * Class PhpushiosException
+ */
+class PhpushiosException extends Exception
 {
 
 }

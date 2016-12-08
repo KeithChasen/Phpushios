@@ -1,7 +1,7 @@
 <?php
 namespace Phpushios;
 
-use PhpushiousException;
+use PhpushiosException;
 
 class Message
 {
@@ -56,7 +56,7 @@ class Message
      */
     public function setPayload()
     {
-        $this->payload_data = [self::APS_NAMESPACE => []];
+        $this->payloadData = [self::APS_NAMESPACE => []];
         if (isset($this->text)) {
             $this->payloadData[self::APS_NAMESPACE ]['alert'] = $this->text;
         }
@@ -91,12 +91,12 @@ class Message
      * Sets the value of badge
      *
      * @param integer $number
-     * @throws PhpushiousException
+     * @throws PhpushiosException
      */
     public function setBadgeNumber($number)
     {
         if (!is_int($number) && $number >= 0) {
-            throw new PhpushiousException(
+            throw new PhpushiosException(
                 "Invalid badge number " . $number
             );
         }
@@ -107,12 +107,12 @@ class Message
      * Sets content-available parameter to configure silent push
      *
      * @param bool $contentAvailable
-     * @throws PhpushiousException
+     * @throws PhpushiosException
      */
     public function setContentAvailable($contentAvailable = false)
     {
         if (!is_bool($contentAvailable)) {
-            throw new PhpushiousException(
+            throw new PhpushiosException(
                 "Invalid content-available value " . $contentAvailable
             );
         }
@@ -133,12 +133,12 @@ class Message
      * Sets mutable-content key for extension on iOS10
      *
      * @param bool $mutableContent
-     * @throws PhpushiousException
+     * @throws PhpushiosException
      */
     public function setMutableContent($mutableContent = false)
     {
         if (!is_bool($mutableContent)) {
-            throw new PhpushiousException(
+            throw new PhpushiosException(
                 "Invalid mutable-content value " . $mutableContent
             );
         }
@@ -171,12 +171,12 @@ class Message
      * @param string $name
      * @param string $value
      *
-     * @throws PhpushiousException
+     * @throws PhpushiosException
      */
     public function setCustomProperty($name, $value)
     {
         if (trim($name) == self::APS_NAMESPACE) {
-            throw new PhpushiousException(
+            throw new PhpushiosException(
                 'Property ' . $name . ' can not be used'
             );
         }
