@@ -1,11 +1,9 @@
 language: php
 php:
   - 7
-lib-curl:
-  - 7.46.0
-lib-openssl:
-  - 1.0.2
 before_script:
+  - openssl version
+  - curl -V
   - composer install
 script:
   - vendor/bin/phpcs module/
