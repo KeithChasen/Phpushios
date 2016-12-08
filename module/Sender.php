@@ -1,12 +1,38 @@
 <?php
+
+/**
+ * Library for sending iOS push notifications using p8 certificate
+ *
+ * PHP version 7
+ *
+ * @category Sending
+ * @package  Phpushios
+ * @author   Keith Chasen <keithchasen89@gmail.com>
+ * @file     Sender
+ * @license  https://opensource.org/licenses/MIT MIT
+ * @version  GIT: $Id$
+ * @link     https://github.com/KeithChasen/Phpushios
+ */
+
 namespace Phpushios;
 
 use PhpushiosException;
 
+/**
+ * Performing sending push notification
+ *
+ * @category Sending
+ * @package  Phpushios
+ * @author   Keith Chasen <keithchasen89@gmail.com>
+ * @file     Sender
+ * @license  https://opensource.org/licenses/MIT MIT
+ * @version  Release: 1.0.0
+ * @link     https://github.com/KeithChasen/Phpushios
+ */
 class Sender
 {
     /**
-     * prod and dev environments
+     * Production and development environments
      */
     const ENVIRONMENTS = [
         'production' => 'https://api.push.apple.com',
@@ -14,37 +40,51 @@ class Sender
     ];
 
     /**
-     * @var string generated authorization token
+     * Generated authorization token
+     *
+     * @var string
      */
-    private $authToken;
+    protected $authToken;
 
     /**
-     * @var array headers to be sent
+     * Headers to be sent
+     *
+     * @var array
      */
     protected $requestHeaders;
 
     /**
-     * @var array user tokens
+     * User tokens
+     *
+     * @var array
      */
     protected $receiversTokens = [];
 
     /**
-     * @var string environment index
+     * Environment name
+     *
+     * @var string
      */
     protected $environment;
 
     /**
-     * @var string bundle id
+     * Bundle id
+     *
+     * @var string
      */
     protected $bundleId;
 
     /**
      * Sender constructor.
      *
-     * @param string $environment
-     * @param string $authToken
-     * @param string $bundleId
-     * @throws PhpushiosException
+     * @param string $environment Environment value to send push to
+     *                            Options: 'development', 'production'
+     * @param string $authToken   Generated authorization token encoded
+     *                            with ES256 algorithm
+     * @param string $bundleId    Bundle Id value
+     *
+     * @throws PhpushiosException Invalid environment value was used
+     * @throws PhpushiosException Empty authorization token was used
      */
     public function __construct($environment, $authToken, $bundleId)
     {
@@ -68,8 +108,11 @@ class Sender
     /**
      * Add receivers token
      *
-     * @param string $token
-     * @throws PhpushiosException
+     * @param string $token Device token which should accept push notification
+     *
+     * @throws PhpushiosException Invalid token was used
+     *
+     * @return void
      */
     public function addReceiver($token)
     {
@@ -84,7 +127,9 @@ class Sender
     /**
      * Finds device token and removes it from receiversTokens array
      *
-     * @param string $token
+     * @param string $token Device token to be deleted from receivers tokens
+     *
+     * @return void
      */
     public function removeReceiversToken($token)
     {
@@ -101,9 +146,13 @@ class Sender
     }
 
     /**
-     * @param resource $curl
+     * Sets headers to be sent with push notification
+     *
+     * @param resource $curl Curl connection instance
+     *
+     * @return void
      */
-    private function setHeaders($curl)
+    protected function setHeaders($curl)
     {
         $this->requestHeaders = [
             'apns-expiration: 0',
@@ -118,7 +167,9 @@ class Sender
     /**
      * Sends push notification to every device from receiversTokens array
      *
-     * @param string $payload
+     * @param string $payload Json encoded payload to be sent
+     *
+     * @return void
      */
     public function sendPush($payload)
     {
@@ -137,19 +188,25 @@ class Sender
     /**
      * Creates and executes
      *
-     * @param string $url
-     * @param string $payload
-     * @throws PhpushiosException
+     * @param string $url     APNS url to be used
+     * @param string $payload Payload to be sent
+     *
+     * @throws PhpushiosException HTTP/2 not supported on server
+     * @throws PhpushiosException HTTP/2 not supported on client
+     * @throws PhpushiosException Empty response
+     *
+     * @return void
      */
-    private function createHttp2Connection($url, $payload)
+    protected function createHttp2Connection($url, $payload)
     {
         if (curl_version()['features'] & CURL_VERSION_HTTP2 !== 0) {
 
-          $ch = curl_init();
+            $ch = curl_init();
 
             $this->setHeaders($ch);
 
-            curl_setopt_array($ch,
+            curl_setopt_array(
+                $ch,
                 [
                     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0,
                     CURLOPT_URL => $url,
@@ -165,7 +222,9 @@ class Sender
             $response = curl_exec($ch);
             $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-             if ($response !== false && preg_match('~HTTP/2.0~', $response)) {
+            if (false !== $response
+                && preg_match('~HTTP/2.0~', $response)
+            ) {
 
             } elseif ($response !== false) {
                  throw new PhpushiosException(
