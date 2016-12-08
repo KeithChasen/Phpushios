@@ -1,5 +1,4 @@
 <?php
-
 namespace Phpushios;
 
 use PhpushiousException;
@@ -11,47 +10,48 @@ class Message
      */
     const APS_NAMESPACE = 'aps';
     /**
-     * @var $payload_data
+     * @var string
      */
     protected $payload_data;
 
     /**
-     * @var $badgeNum
+     * @var integer
      */
     protected $badgeNum;
 
     /**
-     * @var $text
+     * @var string
      */
     protected $text;
 
     /**
-     * @var $sound
+     * @var string
      */
     protected $sound;
 
     /**
-     * @var $contentAvailable
+     * @var integer
      */
     protected $contentAvailable;
 
     /**
-     * @var $category
+     * @var string
      */
     protected $category;
 
     /**
-     * @var $mutableContent
+     * @var integer
      */
     protected $mutableContent;
 
     /**
-     * @var $customProperties
+     * @var array
      */
-    protected $customProperties = [];
+    protected $customProperties;
 
     /**
-     * sets and returns payload
+     * Sets and returns payload
+     *
      * @return string
      */
     public function setPayload()
@@ -88,7 +88,9 @@ class Message
     }
 
     /**
-     * @param $number
+     * Sets the value of badge
+     *
+     * @param integer $number
      * @throws PhpushiousException
      */
     public function setBadgeNumber($number)
@@ -102,6 +104,8 @@ class Message
     }
 
     /**
+     * Sets content-available parameter to configure silent push
+     *
      * @param bool $contentAvailable
      * @throws PhpushiousException
      */
@@ -116,7 +120,9 @@ class Message
     }
 
     /**
-     * @param $category
+     * Sets category
+     *
+     * @param string $category
      */
     public function setCategory($category)
     {
@@ -124,6 +130,8 @@ class Message
     }
 
     /**
+     * Sets mutable-content key for extension on iOS10
+     *
      * @param bool $mutableContent
      * @throws PhpushiousException
      */
@@ -138,7 +146,9 @@ class Message
     }
 
     /**
-     * @param $message
+     * Sets alert message
+     *
+     * @param string $message
      */
     public function setAlert($message)
     {
@@ -146,7 +156,9 @@ class Message
     }
 
     /**
-     * @param $sound
+     * Sets sound
+     *
+     * @param string $sound
      */
     public function setSound($sound)
     {
@@ -154,8 +166,11 @@ class Message
     }
 
     /**
-     * @param $name
-     * @param $value
+     * Sets custom property
+     *
+     * @param string $name
+     * @param string $value
+     *
      * @throws PhpushiousException
      */
     public function setCustomProperty($name, $value)

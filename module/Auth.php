@@ -1,5 +1,4 @@
 <?php
-
 namespace Phpushios;
 
 use Jose\Factory\JWKFactory;
@@ -14,13 +13,14 @@ class Auth
     const ALGORITHM = 'ES256';
 
     /**
-     * @var $authKey
+     * @var string $authKey
      */
     protected $authKey;
 
     /**
      * Auth constructor.
-     * @param $authKey
+     *
+     * @param string $authKey
      * @throws PhpushiousException
      */
     public function __construct($authKey)
@@ -34,11 +34,11 @@ class Auth
     }
 
     /**
-     * Generating auth token from certificate
+     * Generating authorization token from certificate
      *
-     * @param $apnsKeyId
-     * @param $authKeySecret
-     * @param $teamId
+     * @param string $apnsKeyId
+     * @param string $authKeySecret
+     * @param string $teamId
      * @return string
      */
     public function setAuthToken($apnsKeyId, $authKeySecret, $teamId)

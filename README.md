@@ -27,7 +27,7 @@ $secret = null;
 
 $bundleId = 'com.somebundle.id';
 
-$env = 0;
+$env = 'production';
 
 $userToken = 'ae01912dee52f0dc41b16a2fa9d68ff631dc9112b7d629f24008f466e1efef2d';
 
@@ -63,7 +63,7 @@ $secret = null;
 
 $bundleId = 'com.somebundle.id';
 
-$env = 0;
+$env = 'development';
 
 $tokens = [
     ['token' => 'a3r1n3c8596f56f39921f79c55c91a061ea5042ab7be00620e7df0c76069aa7a', 'badge' => 12],

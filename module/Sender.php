@@ -1,5 +1,4 @@
 <?php
-
 namespace Phpushios;
 
 use PhpushiousException;
@@ -10,41 +9,41 @@ class Sender
      * prod and dev environments
      */
     const ENVIRONMENTS = [
-        'https://api.push.apple.com',
-        'https://api.development.push.apple.com'
+        'production' => 'https://api.push.apple.com',
+        'development' => 'https://api.development.push.apple.com'
     ];
 
     /**
-     * @var $authToken
+     * @var string generated authorization token
      */
     private $authToken;
 
     /**
-     * @var $requestHeaders
+     * @var array headers to be sent
      */
     protected $requestHeaders;
 
     /**
-     * @var array $receiversTokens
-     * array of user tokens
+     * @var array user tokens
      */
     protected $receiversTokens = [];
 
     /**
-     * @var $_environment
+     * @var string environment index
      */
-    protected $_environment;
+    protected $environment;
 
     /**
-     * @var $bundleId
+     * @var string bundle id
      */
     protected $bundleId;
 
     /**
      * Sender constructor.
-     * @param $environment
-     * @param $authToken
-     * @param $bundleId
+     *
+     * @param string $environment
+     * @param string $authToken
+     * @param string $bundleId
      * @throws PhpushiousException
      */
     public function __construct($environment, $authToken, $bundleId)
@@ -54,7 +53,7 @@ class Sender
                 'Invalid environment ' . $environment
             );
         }
-        $this->_environment = $environment;
+        $this->environment = $environment;
 
         if (empty($authToken)) {
             throw new PhpushiousException(
@@ -66,7 +65,9 @@ class Sender
     }
 
     /**
-     * @param $token
+     * Add receivers token
+     *
+     * @param string $token
      * @throws PhpushiousException
      */
     public function addReceiver($token)
@@ -80,8 +81,9 @@ class Sender
     }
 
     /**
-     * finds device token and removes it from receiversTokens array
-     * @param $token
+     * Finds device token and removes it from receiversTokens array
+     *
+     * @param string $token
      */
     public function removeReceiversToken($token)
     {
@@ -98,7 +100,7 @@ class Sender
     }
 
     /**
-     * @param $curl
+     * @param resource $curl
      */
     private function setHeaders($curl)
     {
@@ -113,7 +115,9 @@ class Sender
     }
 
     /**
-     * @param $payload
+     * Sends push notification to every device from receiversTokens array
+     *
+     * @param string $payload
      */
     public function sendPush($payload)
     {
@@ -121,7 +125,7 @@ class Sender
 
             $tokenPartUrl = '/3/device/' . $receiversToken;
 
-            $baseUrl = self::ENVIRONMENTS[$this->_environment];
+            $baseUrl = self::ENVIRONMENTS[$this->environment];
 
             $urlToSend = $baseUrl . $tokenPartUrl;
 
@@ -130,8 +134,10 @@ class Sender
     }
 
     /**
-     * @param $url
-     * @param $payload
+     * Creates and executes
+     *
+     * @param string $url
+     * @param string $payload
      * @throws PhpushiousException
      */
     private function createHttp2Connection($url, $payload)
