@@ -21,7 +21,7 @@ before_script:
   - sudo make install
   - sudo ldconfig
   - curl -V
-
+  - cd /home/travis/build/KeithChasen/Phpushios
   - composer install
 script:
   - vendor/bin/phpcs module/
