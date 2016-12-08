@@ -12,7 +12,7 @@ class Message
     /**
      * @var string
      */
-    protected $payload_data;
+    protected $payloadData;
 
     /**
      * @var integer
@@ -58,33 +58,33 @@ class Message
     {
         $this->payload_data = [self::APS_NAMESPACE => []];
         if (isset($this->text)) {
-            $this->payload_data[self::APS_NAMESPACE ]['alert'] = $this->text;
+            $this->payloadData[self::APS_NAMESPACE ]['alert'] = $this->text;
         }
         if (isset($this->sound)) {
-            $this->payload_data[self::APS_NAMESPACE ]['sound'] = $this->sound;
+            $this->payloadData[self::APS_NAMESPACE ]['sound'] = $this->sound;
         }
         if (isset($this->badgeNum)) {
-            $this->payload_data[self::APS_NAMESPACE ]['badge'] = $this->badgeNum;
+            $this->payloadData[self::APS_NAMESPACE ]['badge'] = $this->badgeNum;
         }
         if (isset($this->contentAvailable)) {
-            $this->payload_data[self::APS_NAMESPACE ]['content-available'] = $this->contentAvailable;
+            $this->payloadData[self::APS_NAMESPACE ]['content-available'] = $this->contentAvailable;
         }
         if (isset($this->category)) {
-            $this->payload_data[self::APS_NAMESPACE ]['category'] = $this->category;
+            $this->payloadData[self::APS_NAMESPACE ]['category'] = $this->category;
         }
         if (isset($this->mutableContent)) {
-            $this->payload_data[self::APS_NAMESPACE ]['mutable-content'] = $this->mutableContent;
+            $this->payloadData[self::APS_NAMESPACE ]['mutable-content'] = $this->mutableContent;
         }
 
         if (!empty($this->customProperties)) {
             foreach ($this->customProperties as $key => $value) {
-                $this->payload_data[self::APS_NAMESPACE][$key] = $value;
+                $this->payloadData[self::APS_NAMESPACE][$key] = $value;
             }
         }
 
-        $this->payload_data = json_encode($this->payload_data);
+        $this->payloadData = json_encode($this->payloadData);
 
-        return $this->payload_data;
+        return $this->payloadData;
     }
 
     /**
