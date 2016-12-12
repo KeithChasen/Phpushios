@@ -3,9 +3,9 @@ php:
   - 7
 before_script:
   - sudo apt-get install make
-  - wget https://www.openssl.org/source/openssl-1.0.2g.tar.gz
-  - tar -xzvf openssl-1.0.2g.tar.gz
-  - cd openssl-1.0.2g
+  - wget https://www.openssl.org/source/openssl-1.0.2h.tar.gz
+  - tar -xzvf openssl-1.0.2h.tar.gz
+  - cd openssl-1.0.2h
   - sudo ./config
   - sudo make install
   - sudo ln -sf /usr/local/ssl/bin/openssl /usr/bin/openssl
@@ -16,7 +16,7 @@ before_script:
   - wget http://curl.haxx.se/download/curl-7.46.0.tar.bz2
   - tar -xvjf curl-7.46.0.tar.bz2
   - cd curl-7.46.0
-  - ./configure --with-ssl
+  - ./configure --with-ssl=/usr/bin/openssl
   - make
   - sudo make install
   - sudo ldconfig
