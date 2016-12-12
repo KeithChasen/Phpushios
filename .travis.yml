@@ -23,12 +23,17 @@ addons:
     - cmake
     - cmake-data
 before_script:
-  - wget https://www.openssl.org/source/openssl-1.0.2g.tar.gz
-  - tar -xzvf openssl-1.0.2g.tar.gz
-  - cd openssl-1.0.2g
-  - sudo ./config
+#  - wget https://www.openssl.org/source/openssl-1.0.2g.tar.gz
+#  - tar -xzvf openssl-1.0.2g.tar.gz
+#  - cd openssl-1.0.2g
+#  - sudo ./config
+#  - sudo make install
+#  - sudo ln -sf /usr/local/ssl/bin/openssl /usr/bin/openssl
+
+  - sudo apt-get install libssl-dev
+  - ./configure --prefix=/usr --libdir=/usr/lib/x86_64-linux-gnu
+  - sudo make
   - sudo make install
-  - sudo ln -sf /usr/local/ssl/bin/openssl /usr/bin/openssl
 
   - git clone https://github.com/tatsuhiro-t/nghttp2.git
   - cd nghttp2
@@ -45,6 +50,7 @@ before_script:
   - tar -xvjf curl-7.46.0.tar.bz2
   - cd curl-7.46.0
   - ./configure --with-nghttp2=/usr/local --with-ssl
+#  - ./configure --with-nghttp2=/usr/local --with-ssl=/usr/local/ssl
   - make
   - sudo make install
   - sudo ldconfig
