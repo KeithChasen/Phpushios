@@ -23,6 +23,13 @@ addons:
     - cmake
     - cmake-data
 before_script:
+  - wget https://www.openssl.org/source/openssl-1.0.2g.tar.gz
+  - tar -xzvf openssl-1.0.2g.tar.gz
+  - cd openssl-1.0.2g
+  - sudo ./config
+  - sudo make install
+  - sudo ln -sf /usr/local/ssl/bin/openssl `which openssl`
+
   - git clone https://github.com/tatsuhiro-t/nghttp2.git
   - cd nghttp2
   - autoreconf -i
@@ -31,8 +38,6 @@ before_script:
   - ./configure
   - make
   - sudo make install
-
-  - openssl version
 
   - cd ~
   - sudo apt-get build-dep curl
@@ -43,6 +48,8 @@ before_script:
   - make
   - sudo make install
   - sudo ldconfig
+
+  - openssl version -v
   - curl -V
   - cd /home/travis/build/KeithChasen/Phpushios
   - composer install
