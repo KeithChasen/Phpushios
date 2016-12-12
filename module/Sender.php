@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * Library for sending iOS push notifications using p8 certificate
@@ -84,8 +84,11 @@ class Sender
      * @throws PhpushiosException Invalid environment value was used
      * @throws PhpushiosException Empty authorization token was used
      */
-    public function __construct($environment, $authToken, $bundleId)
-    {
+    public function __construct(
+        string $environment,
+        string $authToken,
+        string $bundleId
+    ) {
         if (!array_key_exists($environment, self::ENVIRONMENTS)) {
             throw new PhpushiosException(
                 'Invalid environment ' . $environment
@@ -112,7 +115,7 @@ class Sender
      *
      * @return void
      */
-    public function addReceiver($token)
+    public function addReceiver(string $token)
     {
         if (!preg_match('~[a-f0-9]{64}~', $token)) {
             throw new PhpushiosException(
@@ -129,7 +132,7 @@ class Sender
      *
      * @return void
      */
-    public function removeReceiversToken($token)
+    public function removeReceiversToken(string $token)
     {
         if (in_array($token, $this->receiversTokens)) {
             unset(
@@ -150,7 +153,7 @@ class Sender
      *
      * @return void
      */
-    protected function setHeaders($curl)
+    protected function setHeaders(resource $curl)
     {
         $this->requestHeaders = [
             'apns-expiration: 0',
@@ -169,7 +172,7 @@ class Sender
      *
      * @return void
      */
-    public function sendPush($payload)
+    public function sendPush(string $payload)
     {
         foreach ($this->receiversTokens as $receiversToken) {
 
@@ -195,49 +198,48 @@ class Sender
      *
      * @return void
      */
-    protected function createHttp2Connection($url, $payload)
+    protected function createHttp2Connection(string $url, string $payload)
     {
-        if (curl_version()['features'] & CURL_VERSION_HTTP2 !== 0) {
-
-            $curlResource = curl_init();
-
-            $this->setHeaders($curlResource);
-
-            curl_setopt_array(
-                $curlResource,
-                [
-                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0,
-                    CURLOPT_URL => $url,
-                    CURLOPT_PORT => 443,
-                    CURLOPT_HEADER => true,
-                    CURLOPT_POST => true,
-                    CURLOPT_POSTFIELDS => $payload,
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_TIMEOUT => 30
-                ]
-            );
-
-            $response = curl_exec($curlResource);
-            $httpcode = curl_getinfo($curlResource, CURLINFO_HTTP_CODE);
-
-            if (false !== $response
-                && preg_match('~HTTP/2.0~', $response)
-            ) {
-
-            } elseif ($response !== false) {
-                 throw new PhpushiosException(
-                     "No HTTP/2 support on server"
-                 );
-            } else {
-                throw new PhpushiosException(
-                    curl_error($curlResource)
-                );
-            }
-            curl_close($curlResource);
-        } else {
+        if (!curl_version()['features'] & CURL_VERSION_HTTP2 === 0) {
             throw new PhpushiosException(
                 "No HTTP/2 support on client"
             );
         }
+
+        $curlResource = curl_init();
+
+        $this->setHeaders($curlResource);
+
+        curl_setopt_array(
+            $curlResource,
+            [
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0,
+                CURLOPT_URL => $url,
+                CURLOPT_PORT => 443,
+                CURLOPT_HEADER => true,
+                CURLOPT_POST => true,
+                CURLOPT_POSTFIELDS => $payload,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_TIMEOUT => 30
+            ]
+        );
+
+        $response = curl_exec($curlResource);
+        $httpcode = curl_getinfo($curlResource, CURLINFO_HTTP_CODE);
+
+        if (false !== $response
+            && preg_match('~HTTP/2.0~', $response)
+        ) {
+
+        } elseif ($response !== false) {
+             throw new PhpushiosException(
+                 "No HTTP/2 support on server"
+             );
+        } else {
+            throw new PhpushiosException(
+                curl_error($curlResource)
+            );
+        }
+        curl_close($curlResource);
     }
 }

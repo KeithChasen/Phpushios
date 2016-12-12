@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * Library for sending iOS push notifications using p8 certificate
@@ -95,7 +95,7 @@ class Message
      *
      * @return string
      */
-    public function setPayload()
+    public function setPayload() : string
     {
         $this->payloadData = [self::APS_NAMESPACE => []];
         if (isset($this->text)) {
@@ -137,13 +137,13 @@ class Message
     /**
      * Sets the value of badge
      *
-     * @param integer $badgeNumber Badge value to be sent
+     * @param int $badgeNumber Badge value to be sent
      *
      * @throws PhpushiosException  Invalid badge number was used
      *
      * @return void
      */
-    public function setBadgeNumber($badgeNumber)
+    public function setBadgeNumber(int $badgeNumber)
     {
         if (!is_int($badgeNumber) || $badgeNumber < 0) {
             throw new PhpushiosException(
@@ -164,7 +164,7 @@ class Message
      *
      * @return void
      */
-    public function setContentAvailable($contentAvailable = false)
+    public function setContentAvailable(bool $contentAvailable = false)
     {
         if (!is_bool($contentAvailable)) {
             throw new PhpushiosException(
@@ -181,7 +181,7 @@ class Message
      *
      * @return void
      */
-    public function setCategory($category)
+    public function setCategory(string $category)
     {
         $this->category = !empty($category) ? $category : null;
     }
@@ -196,7 +196,7 @@ class Message
      *
      * @return void
      */
-    public function setMutableContent($mutableContent = false)
+    public function setMutableContent(bool $mutableContent = false)
     {
         if (!is_bool($mutableContent)) {
             throw new PhpushiosException(
@@ -213,7 +213,7 @@ class Message
      *
      * @return void
      */
-    public function setAlert($message)
+    public function setAlert(string $message)
     {
         $this->text = $message;
     }
@@ -225,7 +225,7 @@ class Message
      *
      * @return void
      */
-    public function setSound($sound)
+    public function setSound(string $sound)
     {
         $this->sound = $sound;
     }
@@ -241,7 +241,7 @@ class Message
      *
      * @return void
      */
-    public function setCustomProperty($name, $value)
+    public function setCustomProperty(string $name, string $value)
     {
         if (trim($name) == self::APS_NAMESPACE) {
             throw new PhpushiosException(
