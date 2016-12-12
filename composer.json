@@ -5,8 +5,8 @@
     "license":"MIT",
     "require": {
         "php": ">= 7",
-        "curl": ">= 7.46.0",
-        "openssl": ">= 1.0.2",
+        "lib-curl": ">= 7.46.0",
+        "lib-openssl": ">= 1.0.2",
         "spomky-labs/jose": "^6.1.1"
     },
     "require-dev": {
