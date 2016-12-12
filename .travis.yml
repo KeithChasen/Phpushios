@@ -44,7 +44,7 @@ before_script:
   - wget http://curl.haxx.se/download/curl-7.46.0.tar.bz2
   - tar -xvjf curl-7.46.0.tar.bz2
   - cd curl-7.46.0
-  - ./configure --with-nghttp2=/usr/local --with-ssl
+  - ./configure --with-nghttp2=/usr/local --with-ssl=/usr/local/ssl/bin/openssl `which openssl`
   - make
   - sudo make install
   - sudo ldconfig
