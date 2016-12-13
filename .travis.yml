@@ -22,8 +22,8 @@ addons:
 #    - libc-ares-dev
 #    - cmake
 #    - cmake-data
-    - curl
-    - openssl
+    - php-curl
+    - php-openssl
 before_script:
 #  - wget https://www.openssl.org/source/openssl-1.0.2g.tar.gz
 #  - tar -xzvf openssl-1.0.2g.tar.gz
