@@ -4,26 +4,26 @@ php:
 addons:
   apt:
     packages:
-    - g++-4.9
-    - libstdc++-4.9-dev
-    - autoconf
-    - automake
-    - autotools-dev
-    - libtool
-    - pkg-config
-    - zlib1g-dev
-    - libcunit1-dev
-    - libssl-dev
-    - libxml2-dev
-    - libev-dev
-    - libevent-dev
-    - libjansson-dev
-    - libjemalloc-dev
-    - libc-ares-dev
-    - cmake
-    - cmake-data
-    - lib-curl-7.46.0
-    - lib-openssl-1.0.2
+#    - g++-4.9
+#    - libstdc++-4.9-dev
+#    - autoconf
+#    - automake
+#    - autotools-dev
+#    - libtool
+#    - pkg-config
+#    - zlib1g-dev
+#    - libcunit1-dev
+#    - libssl-dev
+#    - libxml2-dev
+#    - libev-dev
+#    - libevent-dev
+#    - libjansson-dev
+#    - libjemalloc-dev
+#    - libc-ares-dev
+#    - cmake
+#    - cmake-data
+    - curl-7.46.0
+    - openssl-1.0.2
 before_script:
 #  - wget https://www.openssl.org/source/openssl-1.0.2g.tar.gz
 #  - tar -xzvf openssl-1.0.2g.tar.gz
