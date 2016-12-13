@@ -29,10 +29,7 @@ before_script:
   - sudo ./config
   - make
   - sudo make install
-#  - sudo ln -sf /usr/local/ssl/bin/openssl /usr/bin/openssl
-#  - sudo ln -sf /usr/local/ssl/bin/openssl `which openssl`
-  - sudo echo "/usr/local/ssl/lib" >> /etc/ld.so.conf
-  - ldconfig
+  - sudo ln -sf /usr/local/ssl/bin/openssl /usr/bin/openssl
 
   - git clone https://github.com/tatsuhiro-t/nghttp2.git
   - cd nghttp2
@@ -48,9 +45,7 @@ before_script:
   - wget http://curl.haxx.se/download/curl-7.46.0.tar.bz2
   - tar -xvjf curl-7.46.0.tar.bz2
   - cd curl-7.46.0
-#  - ./configure --with-nghttp2=/usr/local --with-openssl=/usr/bin/openssl
-  - ./configure --with-nghttp2=/usr/local --with-ssl=/usr/local/ssl
-#  - ./configure --with-nghttp2=/usr/local --with-openssl=`which openssl`
+  - ./configure --with-nghttp2=/usr/local --with-openssl=/usr/bin/openssl
   - make
   - sudo make install
   - sudo ldconfig
