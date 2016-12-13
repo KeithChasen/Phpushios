@@ -2,60 +2,13 @@ language: php
 php:
   - 7
 addons:
-  apt:
-    packages:
-#    - g++-4.9
-#    - libstdc++-4.9-dev
-#    - autoconf
-#    - automake
-#    - autotools-dev
-#    - libtool
-#    - pkg-config
-#    - zlib1g-dev
-#    - libcunit1-dev
-#    - libssl-dev
-#    - libxml2-dev
-#    - libev-dev
-#    - libevent-dev
-#    - libjansson-dev
-#    - libjemalloc-dev
-#    - libc-ares-dev
-#    - cmake
-#    - cmake-data
-    - php-curl
-    - php-openssl
+  apt_packages:
+      - php-curl
+      - php-openssl
 before_script:
-#  - wget https://www.openssl.org/source/openssl-1.0.2g.tar.gz
-#  - tar -xzvf openssl-1.0.2g.tar.gz
-#  - cd openssl-1.0.2g
-#  - sudo ./config enable-shared
-##  - sudo ./config shared
-#  - make depend
-#  - sudo make install
-#  - sudo ln -sf /usr/local/ssl/bin/openssl /usr/bin/openssl
-#
-#  - git clone https://github.com/tatsuhiro-t/nghttp2.git
-#  - cd nghttp2
-#  - autoreconf -i
-#  - automake
-#  - autoconf
-#  - ./configure
-#  - make
-#  - sudo make install
-#
-#  - cd ~
-#  - sudo apt-get build-dep curl
-#  - wget http://curl.haxx.se/download/curl-7.46.0.tar.bz2
-#  - tar -xvjf curl-7.46.0.tar.bz2
-#  - cd curl-7.46.0
-#  - ./configure --with-nghttp2=/usr/local --with-openssl=/usr/bin/openssl
-#  - make
-#  - sudo make install
-#  - sudo ldconfig
-#
   - openssl version -v
   - curl -V
-#  - cd /home/travis/build/KeithChasen/Phpushios
-  - composer install
+  - composer self-update
+  - composer update --no-interaction --prefer-dist
 script:
   - vendor/bin/phpcs module/
