@@ -22,8 +22,8 @@ addons:
 #    - libc-ares-dev
 #    - cmake
 #    - cmake-data
-    - curl-7.46.0
-    - openssl-1.0.2
+    - curl
+    - openssl
 before_script:
 #  - wget https://www.openssl.org/source/openssl-1.0.2g.tar.gz
 #  - tar -xzvf openssl-1.0.2g.tar.gz
@@ -53,8 +53,8 @@ before_script:
 #  - sudo make install
 #  - sudo ldconfig
 #
-#  - openssl version -v
-#  - curl -V
+  - openssl version -v
+  - curl -V
 #  - cd /home/travis/build/KeithChasen/Phpushios
   - composer install
 script:
