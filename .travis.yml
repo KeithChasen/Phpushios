@@ -31,7 +31,7 @@ before_script:
   - sudo make install
 #  - sudo ln -sf /usr/local/ssl/bin/openssl /usr/bin/openssl
 #  - sudo ln -sf /usr/local/ssl/bin/openssl `which openssl`
-  - echo "/usr/local/ssl/lib" >> /etc/ld.so.conf
+  - sudo echo "/usr/local/ssl/lib" >> /etc/ld.so.conf
   - ldconfig
 
   - git clone https://github.com/tatsuhiro-t/nghttp2.git
