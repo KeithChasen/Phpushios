@@ -46,7 +46,7 @@ before_script:
   - tar -xvjf curl-7.46.0.tar.bz2
   - cd curl-7.46.0
 #  - ./configure --with-nghttp2=/usr/local --with-openssl=/usr/bin/openssl
-  - ./configure --with-nghttp2=/usr/local --with-ssl=/usr/local/ssl
+  - ./configure --with-nghttp2=/usr/local --with-openssl=/usr/local/ssl
   - make
   - sudo make install
   - sudo ldconfig
