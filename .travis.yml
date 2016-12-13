@@ -3,8 +3,8 @@ php:
   - 7
 addons:
   apt_packages:
-      - php-curl
-      - php-openssl
+      - php-curl-7.46.0
+      - php-openssl-1.0.2j
 before_script:
   - openssl version -v
   - curl -V
