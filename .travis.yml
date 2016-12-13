@@ -3,7 +3,7 @@ php:
   - 7
 addons:
   apt:
-    packages:
+    pacages:
     - g++-4.9
     - libstdc++-4.9-dev
     - autoconf
