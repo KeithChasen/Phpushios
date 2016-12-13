@@ -52,6 +52,10 @@ before_script:
   - sudo make install
   - sudo ldconfig
 
+  - sudo apt-get update
+  - sudo apt-get install curl
+  - sudo apt-get install libcurl3
+
   - openssl version -a
   - curl -V
   - cd /home/travis/build/KeithChasen/Phpushios
