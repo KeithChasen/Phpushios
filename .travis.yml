@@ -29,7 +29,8 @@ before_script:
   - sudo ./config
   - make depend
   - sudo make install
-  - sudo ln -sf /usr/local/ssl/bin/openssl /usr/bin/openssl
+#  - sudo ln -sf /usr/local/ssl/bin/openssl /usr/bin/openssl
+  - sudo ln -sf /usr/local/ssl/bin/openssl `which openssl`
 
   - git clone https://github.com/tatsuhiro-t/nghttp2.git
   - cd nghttp2
