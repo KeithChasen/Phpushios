@@ -75,7 +75,7 @@ before_script:
 
 #  - openssl version -a
 #  - curl -V
-#  - cd /home/travis/build/KeithChasen/Phpushios
+  - cd /home/travis/build/KeithChasen/Phpushios
   - composer install
 script:
   - vendor/bin/phpcs module/
