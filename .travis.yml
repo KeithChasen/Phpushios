@@ -60,6 +60,7 @@ before_script:
   - sudo apt-get install libssl1.0.2
 
   - php -i | grep OpenSSL
+  - php -i | grep curl
 
 #  - openssl version -a
 #  - curl -V
