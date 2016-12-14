@@ -63,9 +63,9 @@ before_script:
   - sudo apt-get purge php5-fpm
   - sudo apt-get install php7.0-cli apache2 php7.0 php7.0-mysql php7.0-fpm php7.0-curl
 
-  - ls /etc/php/7.0
-#  - ls /etc/php/7.0/cli/conf.d
-
+#  - ls /etc/php/7.0
+  - ls /etc/php/7.0/cli/conf.d
+  - cat /etc/php/7.0/cli/conf.d/20-curl.ini
 #  - sudo echo extension=curl.so >> /etc/php/7.0/cli/conf.d/20-curl.ini
 
   - php -i | grep OpenSSL
