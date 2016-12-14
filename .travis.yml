@@ -23,41 +23,41 @@ addons:
     - cmake
     - cmake-data
 before_script:
-#  - wget https://www.openssl.org/source/openssl-1.0.2g.tar.gz
-#  - tar -xzvf openssl-1.0.2g.tar.gz
-#  - cd openssl-1.0.2g
-##  - sudo ./config
-#  - sudo ./config enable-shared
-#  - make
-#  - sudo make install
-#  - sudo ln -sf /usr/local/ssl/bin/openssl /usr/bin/openssl
-#
-#  - git clone https://github.com/tatsuhiro-t/nghttp2.git
-#  - cd nghttp2
-#  - autoreconf -i
-#  - automake
-#  - autoconf
-#  - ./configure
-#  - make
-#  - sudo make install
-#
-#  - cd ~
-#  - sudo apt-get build-dep curl
-#  - wget http://curl.haxx.se/download/curl-7.46.0.tar.bz2
-#  - tar -xvjf curl-7.46.0.tar.bz2
-#  - cd curl-7.46.0
+  - wget https://www.openssl.org/source/openssl-1.0.2g.tar.gz
+  - tar -xzvf openssl-1.0.2g.tar.gz
+  - cd openssl-1.0.2g
+#  - sudo ./config
+  - sudo ./config enable-shared
+  - make
+  - sudo make install
+  - sudo ln -sf /usr/local/ssl/bin/openssl /usr/bin/openssl
+
+  - git clone https://github.com/tatsuhiro-t/nghttp2.git
+  - cd nghttp2
+  - autoreconf -i
+  - automake
+  - autoconf
+  - ./configure
+  - make
+  - sudo make install
+
+  - cd ~
+  - sudo apt-get build-dep curl
+  - wget http://curl.haxx.se/download/curl-7.46.0.tar.bz2
+  - tar -xvjf curl-7.46.0.tar.bz2
+  - cd curl-7.46.0
 ##  - ./configure --with-nghttp2=/usr/local --with-openssl=/usr/bin/openssl
-#  - ./configure --with-nghttp2=/usr/local --with-openssl=/usr/bin/ssl
-#  - make
-#  - sudo make install
-#  - sudo ldconfig
+  - ./configure --with-nghttp2=/usr/local --with-openssl=/usr/bin/ssl
+  - make
+  - sudo make install
+  - sudo ldconfig
 
   - sudo apt-get install software-properties-common python-software-properties
   - sudo add-apt-repository -y ppa:ondrej/php
   -
   - sudo apt-get update
 
-  - echo Y | sudo apt-get upgrade openssl
+#  - echo Y | sudo apt-get upgrade openssl
 #  - sudo apt-get install php7.0-curl
 #  - sudo apt-get install libssl1.0.2
 
