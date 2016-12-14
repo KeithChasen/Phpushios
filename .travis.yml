@@ -52,6 +52,7 @@ before_script:
 #  - sudo make install
 #  - sudo ldconfig
 
+  - sudo apt-get install software-properties-common python-software-properties
   - sudo add-apt-repository main
   - sudo add-apt-repository universe
   - sudo add-apt-repository restricted
