@@ -61,7 +61,7 @@ before_script:
 
 
   - sudo apt-get purge php5-fpm
-  - sudo apt-get install php7.0-cli php7.0-common libapache2-mod-php7.0 php7.0 php7.0-mysql php7.0-fpm php7.0-curl php7.0-gd php7.0-bz2
+  - sudo apt-get install php7.0-cli apache2 php7.0 php7.0-mysql php7.0-fpm php7.0-curl
 
   - ls /etc/php/7.0
 #  - ls /etc/php/7.0/cli/conf.d
