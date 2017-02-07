@@ -9,6 +9,7 @@ Requirements
 + openssl >= 1.0.2
 
 Installation
+=
 ```bash
 $ composer require keithchasen/phpushious dev-master
 ```
