@@ -8,6 +8,11 @@ Requirements
 + curl >= 7.46.0
 + openssl >= 1.0.2
 
+Installation
+```bash
+$ composer require keithchasen/phpushious dev-master
+```
+
 Simplest using example
 -
 ```php
